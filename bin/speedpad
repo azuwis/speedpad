@@ -535,9 +535,9 @@ class Quote(object):
         return self.strlen
 
     def istypo(self, ypos, xpos, s, record=False, **kwargs):
-        if not self.inrange(ypos, xpos):
+        if not self.inrange(ypos, xpos/2):
             return True
-        expect = self.lines[ypos][xpos]
+        expect = self.lines[ypos][xpos/2]
         if s == expect:
             if record:
                 self.stats.fixtypo(ypos, xpos, **kwargs)
@@ -553,11 +553,11 @@ class Quote(object):
         return len(self.lines[ypos])
 
     def iseol(self, ypos, xpos):
-        return ypos < len(self.lines) and xpos >= len(self.lines[ypos])
+        return ypos < len(self.lines) and xpos/2 >= len(self.lines[ypos])
 
     def iscomplete(self, ypos, xpos):
         if ypos == len(self.lines) - 1:
-            return xpos >= len(self.lines[ypos])
+            return xpos/2 >= len(self.lines[ypos])
         return ypos >= len(self.lines)
 
     def iscorrect(self):
